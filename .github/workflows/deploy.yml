@@ -1,0 +1,44 @@
+name: Deploy do Jogo no GitHub Pages
+
+on:
+  # Roda o deploy quando você faz push na branch main
+  push:
+    branches: ["main"]
+
+  # Permite rodar manualmente na aba Actions
+  workflow_dispatch:
+
+# Permissões necessárias para o GITHUB_TOKEN fazer o deploy
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Permite apenas um deploy por vez
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Job único de deploy
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+        
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+        
+      - name: Upload dos arquivos (Artifact)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # O ponto '.' indica que o index.html está na raiz do repo
+          path: '.'
+          
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
