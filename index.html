@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoMission: Geometria Plana</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #020617;
+            color: #e2e8f0;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        h1, h2, h3, .sci-fi-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Animação de Fundo (Grid Blueprint) */
+        .blueprint-bg {
+            background-color: #0f172a;
+            background-image: 
+                linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+        }
+
+        /* CRT Effect */
+        .crt-screen {
+            background: radial-gradient(circle, #1e293b 0%, #020617 100%);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            border: 2px solid #334155;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .crt-screen::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        /* UI Elements */
+        .input-sci-fi {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid #3b82f6;
+            color: #60a5fa;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .btn-sci-fi {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-sci-fi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        .game-section { transition: opacity 0.5s ease-in-out; }
+    </style>
+</head>
+<body class="h-screen w-full relative">
+
+    <div class="blueprint-bg pointer-events-none"></div>
+
+    <!-- ========================================= -->
+    <!-- LANDING PAGE (MENU PRINCIPAL)             -->
+    <!-- ========================================= -->
+    <div id="landingPage" class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-slate-900/95 backdrop-blur-sm">
+        <div class="text-center mb-10">
+            <i class="fas fa-drafting-compass text-6xl text-cyan-500 mb-4 drop-shadow-lg"></i>
+            <h1 class="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 tracking-tighter filter drop-shadow-lg">
+                GEOMISSION
+            </h1>
+            <p class="text-slate-400 text-lg mt-2 tracking-widest font-mono">MÓDULO DE GEOMETRIA PLANA</p>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-6 w-full max-w-4xl px-8">
+            <!-- Card Single Player -->
+            <button onclick="app.switchMode('solo')" class="btn-sci-fi group flex-1 bg-slate-800 border-2 border-cyan-500/50 hover:border-cyan-400 p-6 rounded-xl flex flex-col items-center text-cyan-100 hover:bg-slate-800/80 transition-all">
+                <div class="bg-cyan-900/30 p-5 rounded-full mb-4 group-hover:scale-110 transition-transform ring-1 ring-cyan-500/30">
+                    <i class="fas fa-user-graduate text-4xl text-cyan-400"></i>
+                </div>
+                <h2 class="text-xl font-bold mb-1">MODO ESTUDO (SOLO)</h2>
+                <p class="text-slate-400 text-xs text-center leading-relaxed max-w-xs">
+                    Pratique Áreas, Perímetros e Teorema de Pitágoras no seu ritmo.
+                </p>
+            </button>
+
+            <!-- Card Multiplayer -->
+            <button onclick="app.switchMode('multi')" class="btn-sci-fi group flex-1 bg-slate-800 border-2 border-orange-500/50 hover:border-orange-400 p-6 rounded-xl flex flex-col items-center text-orange-100 hover:bg-slate-800/80 transition-all">
+                <div class="bg-orange-900/30 p-5 rounded-full mb-4 group-hover:scale-110 transition-transform ring-1 ring-orange-500/30">
+                    <i class="fas fa-users text-4xl text-orange-400"></i>
+                </div>
+                <h2 class="text-xl font-bold mb-1">DUELO (MULTIPLAYER)</h2>
+                <p class="text-slate-400 text-xs text-center leading-relaxed max-w-xs">
+                    Competição 1x1. Quem resolve o problema geométrico mais rápido vence.
+                </p>
+            </button>
+        </div>
+        
+        <!-- RODAPÉ COM NOME E SENAI -->
+        <div class="mt-12 text-center">
+            <p class="text-slate-500 text-xs font-mono mb-2 uppercase tracking-widest">Desenvolvido por VS, JM, LM, GC, GT, TD</p>
+            <div class="flex items-center justify-center gap-3 text-slate-400 bg-slate-800/50 px-4 py-2 rounded-full border border-slate-700">
+                <i class="fas fa-cogs text-blue-500"></i>
+                <span class="font-bold tracking-wider text-xs">PROJETO SENAI</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- SOLO MODE (Jogo de Estudo)                -->
+    <!-- ========================================= -->
+    <div id="soloApp" class="game-section hidden h-full flex flex-col relative z-10">
+        <!-- Header Solo -->
+        <header class="w-full bg-slate-900 border-b border-slate-700 p-3 flex justify-between items-center shadow-lg">
+            <div class="flex items-center gap-3">
+                <button onclick="app.goHome()" class="text-slate-400 hover:text-white transition-colors text-sm">
+                    <i class="fas fa-chevron-left"></i> MENU
+                </button>
+                <div class="h-6 w-px bg-slate-700 mx-2"></div>
+                <h1 class="text-lg font-bold text-cyan-400 tracking-wider hidden md:block">GEOMISSION <span class="text-slate-500 text-xs font-normal">| PLANA</span></h1>
+            </div>
+            <div class="flex gap-6 text-sm">
+                <div class="text-center">
+                    <span class="block text-slate-400 text-[10px]">PONTOS</span>
+                    <span id="scoreDisplay" class="text-green-400 font-bold sci-fi-font text-lg">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Solo -->
+        <main class="flex-1 flex flex-col md:flex-row overflow-hidden">
+            <!-- Canvas Container -->
+            <div class="w-full md:w-2/3 h-[45vh] md:h-full p-2 flex items-center justify-center bg-slate-900/50">
+                <div class="w-full h-full crt-screen rounded-lg relative flex items-center justify-center" id="canvasContainerSolo">
+                    <canvas id="gameCanvasSolo" class="absolute z-1"></canvas>
+                    <div id="feedbackOverlaySolo" class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none hidden opacity-0 transition-opacity duration-500">
+                        <h2 id="feedbackTextSolo" class="text-4xl font-bold sci-fi-font drop-shadow-lg"></h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="w-full md:w-1/3 h-[55vh] md:h-full bg-slate-800 border-l border-slate-700 p-4 flex flex-col overflow-y-auto">
+                <!-- Solo Menu -->
+                <div id="soloMenuPanel" class="flex flex-col gap-3 h-full justify-center">
+                    <h2 class="text-xl text-center text-white mb-4 border-b border-cyan-500 pb-2">Escolha o Tema</h2>
+                    <button onclick="soloGame.start('perimeter')" class="btn-sci-fi bg-blue-600/20 border border-blue-500 hover:bg-blue-600 text-blue-100 p-3 rounded-lg flex items-center gap-3">
+                        <i class="fas fa-vector-square text-lg"></i> 
+                        <div class="text-left">
+                            <span class="font-bold block">Perímetros</span>
+                            <span class="text-[10px] text-slate-400 normal-case">Soma dos lados</span>
+                        </div>
+                    </button>
+                    <button onclick="soloGame.start('area')" class="btn-sci-fi bg-purple-600/20 border border-purple-500 hover:bg-purple-600 text-purple-100 p-3 rounded-lg flex items-center gap-3">
+                        <i class="fas fa-th text-lg"></i> 
+                        <div class="text-left">
+                            <span class="font-bold block">Áreas</span>
+                            <span class="text-[10px] text-slate-400 normal-case">Superfície interna</span>
+                        </div>
+                    </button>
+                    <button onclick="soloGame.start('pythagoras')" class="btn-sci-fi bg-emerald-600/20 border border-emerald-500 hover:bg-emerald-600 text-emerald-100 p-3 rounded-lg flex items-center gap-3">
+                        <i class="fas fa-draw-polygon text-lg"></i> 
+                        <div class="text-left">
+                            <span class="font-bold block">Pitágoras</span>
+                            <span class="text-[10px] text-slate-400 normal-case">Triângulos Retângulos</span>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Solo Game Active -->
+                <div id="soloGamePanel" class="hidden flex-col h-full">
+                    <div class="flex justify-between items-center mb-2">
+                        <button onclick="soloGame.exit()" class="text-xs text-slate-400 hover:text-white flex items-center gap-1">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                        <span id="soloModeTitle" class="text-xs font-bold text-cyan-400 uppercase"></span>
+                    </div>
+
+                    <div class="bg-slate-900/80 p-4 rounded-lg border border-slate-700 mb-4 flex-grow flex flex-col justify-center">
+                        <div class="text-center mb-6">
+                            <h3 class="text-white font-bold text-lg mb-1"><i class="fas fa-calculator mr-2 text-cyan-500"></i><span id="soloQuestionTitle">Calcule a Área</span></h3>
+                            <p id="soloProblemDesc" class="text-slate-400 text-sm">Observe as medidas no painel e resolva.</p>
+                        </div>
+
+                        <!-- Inputs -->
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-2 bg-slate-800 p-2 rounded border border-slate-600">
+                                <span id="soloInputLabel" class="text-xl font-bold font-serif text-white w-10 text-right">A =</span>
+                                <input type="number" step="0.1" id="soloAnswerVal" class="input-sci-fi flex-1 p-2 rounded text-xl focus:outline-none focus:border-cyan-400 text-right" placeholder="0.0">
+                                <span class="text-slate-500 text-sm font-bold pt-2">u.m.</span>
+                            </div>
+                            
+                            <button onclick="soloGame.check()" class="w-full btn-sci-fi bg-green-600 hover:bg-green-500 text-white font-bold py-3 rounded text-sm shadow-lg shadow-green-900/20">
+                                VERIFICAR RESPOSTA
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Hint -->
+                    <div class="mt-auto">
+                        <button onclick="soloGame.toggleHint()" class="w-full text-xs text-yellow-500 hover:text-yellow-400 mb-2 flex items-center justify-center gap-2">
+                            <i class="far fa-lightbulb"></i> Ver Fórmula
+                        </button>
+                        <div id="soloHintBox" class="hidden bg-yellow-900/20 border border-yellow-700/50 p-3 rounded text-center">
+                            <p id="soloHintText" class="font-serif italic text-yellow-200 text-lg">b x h</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- MULTIPLAYER MODE (Duelo 1v1)              -->
+    <!-- ========================================= -->
+    <div id="multiApp" class="game-section hidden h-full flex flex-col relative z-10 bg-slate-900">
+        <!-- Header Multi -->
+        <header class="w-full bg-black border-b border-orange-900/50 p-3 flex justify-between items-center shadow-lg">
+            <div class="flex items-center gap-3">
+                <button onclick="app.goHome()" class="text-slate-400 hover:text-white transition-colors text-xs">
+                    <i class="fas fa-chevron-left"></i> SAIR
+                </button>
+                <div class="h-6 w-px bg-slate-800 mx-2"></div>
+                <h1 class="text-lg font-bold text-orange-500 tracking-wider"><i class="fas fa-crosshairs mr-2"></i>DUELO GEOMÉTRICO</h1>
+            </div>
+            <div class="flex items-center gap-8">
+                <div class="flex flex-col items-center">
+                    <span class="text-[10px] text-cyan-400 font-bold">JOGADOR 1</span>
+                    <span id="p1Score" class="text-2xl sci-fi-font text-white">0</span>
+                </div>
+                <div class="text-slate-600 font-bold">VS</div>
+                <div class="flex flex-col items-center">
+                    <span class="text-[10px] text-orange-400 font-bold">JOGADOR 2</span>
+                    <span id="p2Score" class="text-2xl sci-fi-font text-white">0</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 flex flex-col h-full overflow-hidden">
+            <!-- Center Canvas (Shared View) -->
+            <div class="h-[40vh] w-full p-2 bg-slate-950 relative flex justify-center border-b-2 border-slate-800">
+                <div class="aspect-video h-full crt-screen rounded-lg relative" id="canvasContainerMulti">
+                     <canvas id="gameCanvasMulti" class="absolute z-1"></canvas>
+                     
+                     <!-- Round Info Overlay -->
+                     <div id="multiOverlay" class="absolute inset-0 bg-black/80 z-20 flex flex-col items-center justify-center text-center">
+                         <h2 id="multiRoundTitle" class="text-2xl font-bold text-white mb-2 sci-fi-font">PRONTO?</h2>
+                         <p id="multiRoundDesc" class="text-slate-300 text-sm mb-4 max-w-md px-4">O problema aparecerá abaixo.</p>
+                         <button onclick="multiGame.nextRound()" class="btn-sci-fi bg-white text-black px-8 py-2 rounded font-bold hover:bg-slate-200">INICIAR RODADA</button>
+                     </div>
+
+                     <!-- Feedback Winner -->
+                     <div id="multiWinnerOverlay" class="absolute inset-0 bg-black/90 z-30 hidden flex-col items-center justify-center">
+                        <h2 id="winnerText" class="text-4xl font-bold sci-fi-font mb-4 text-white">P1 VENCEU!</h2>
+                        <div class="text-xl text-green-400 font-mono mb-6" id="winnerAnswer">Resposta: 5.0</div>
+                        <button onclick="multiGame.prepRound()" class="btn-sci-fi border border-white text-white px-6 py-2 rounded hover:bg-white hover:text-black">PRÓXIMA</button>
+                     </div>
+                </div>
+            </div>
+
+            <!-- Split Controls -->
+            <div class="flex-1 flex flex-row h-[60vh] md:h-full">
+                <!-- P1 Controls (Blue) -->
+                <div class="flex-1 bg-slate-900 border-r border-slate-700 p-4 flex flex-col relative">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-cyan-500 shadow-[0_0_15px_#06b6d4]"></div>
+                    <h3 class="text-cyan-400 font-bold mb-4 sci-fi-font text-center">JOGADOR 1 (Azul)</h3>
+                    
+                    <div class="flex-grow flex flex-col justify-center space-y-4 opacity-50 pointer-events-none transition-opacity" id="p1Panel">
+                        <input type="number" id="p1Input" class="input-sci-fi w-full p-4 text-2xl rounded focus:border-cyan-500 text-center" placeholder="?">
+                        <button onclick="multiGame.submit(1)" class="btn-sci-fi w-full bg-cyan-700 hover:bg-cyan-600 text-white p-4 rounded font-bold shadow-lg">
+                            ENVIAR
+                        </button>
+                    </div>
+                </div>
+
+                <!-- P2 Controls (Red/Orange) -->
+                <div class="flex-1 bg-slate-900 p-4 flex flex-col relative">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-orange-500 shadow-[0_0_15px_#f97316]"></div>
+                    <h3 class="text-orange-400 font-bold mb-4 sci-fi-font text-center">JOGADOR 2 (Laranja)</h3>
+                    
+                    <div class="flex-grow flex flex-col justify-center space-y-4 opacity-50 pointer-events-none transition-opacity" id="p2Panel">
+                        <input type="number" id="p2Input" class="input-sci-fi w-full p-4 text-2xl rounded focus:border-orange-500 text-center" placeholder="?">
+                        <button onclick="multiGame.submit(2)" class="btn-sci-fi w-full bg-orange-700 hover:bg-orange-600 text-white p-4 rounded font-bold shadow-lg">
+                            ENVIAR
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- SHARED LOGIC -->
+    <script>
+        // --- GLOBAL APP CONTROLLER ---
+        const app = {
+            mode: 'menu',
+            switchMode(newMode) {
+                document.getElementById('landingPage').classList.add('hidden');
+                document.getElementById('soloApp').classList.add('hidden');
+                document.getElementById('multiApp').classList.add('hidden');
+
+                if (newMode === 'menu') {
+                    document.getElementById('landingPage').classList.remove('hidden');
+                } else if (newMode === 'solo') {
+                    document.getElementById('soloApp').classList.remove('hidden');
+                    soloGame.init();
+                } else if (newMode === 'multi') {
+                    document.getElementById('multiApp').classList.remove('hidden');
+                    multiGame.init();
+                }
+                this.mode = newMode;
+            },
+            goHome() { this.switchMode('menu'); }
+        };
+
+        // --- UTILS ---
+        function getRandomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+        class GameRenderer {
+            constructor(canvasId, containerId) {
+                this.canvas = document.getElementById(canvasId);
+                this.ctx = this.canvas.getContext('2d');
+                this.container = document.getElementById(containerId);
+                this.scale = 0;
+                window.addEventListener('resize', () => this.resize());
+            }
+
+            resize() {
+                if(this.container.offsetParent === null) return;
+                this.canvas.width = this.container.clientWidth;
+                this.canvas.height = this.container.clientHeight;
+                // Base scale on a logical width of 20 units
+                this.scale = Math.min(this.canvas.width, this.canvas.height) / 20;
+            }
+
+            // Draw text centered at x,y
+            drawText(text, x, y, color = '#fff', size = 16) {
+                const ctx = this.ctx;
+                ctx.fillStyle = color;
+                ctx.font = `bold ${size}px Orbitron`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(text, x, y);
+            }
+
+            // Draw line with length label
+            drawLine(x1, y1, x2, y2, label = null) {
+                const ctx = this.ctx;
+                ctx.beginPath();
+                ctx.strokeStyle = '#60a5fa';
+                ctx.lineWidth = 3;
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+
+                if (label) {
+                    const midX = (x1 + x2) / 2;
+                    const midY = (y1 + y2) / 2;
+                    // Offset label slightly
+                    const offsetX = (y1 - y2) * 0.15; // Perpendicular vector for offset
+                    const offsetY = (x2 - x1) * 0.15;
+                    this.drawText(label, midX + offsetX, midY + offsetY, '#fbbf24', 14);
+                }
+            }
+
+            drawRect(w, h, showArea = false) {
+                const cx = this.canvas.width / 2;
+                const cy = this.canvas.height / 2;
+                const sw = w * this.scale;
+                const sh = h * this.scale;
+                const x = cx - sw/2;
+                const y = cy - sh/2;
+
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Shape fill
+                this.ctx.fillStyle = 'rgba(59, 130, 246, 0.1)';
+                this.ctx.fillRect(x, y, sw, sh);
+
+                // Sides
+                this.drawLine(x, y, x + sw, y, w); // Top
+                this.drawLine(x + sw, y, x + sw, y + sh, h); // Right
+                this.drawLine(x + sw, y + sh, x, y + sh, w); // Bottom
+                this.drawLine(x, y + sh, x, y, h); // Left
+
+                if(showArea) this.drawText("?", cx, cy, '#fff', 30);
+            }
+
+            drawTriangle(b, h) {
+                const cx = this.canvas.width / 2;
+                const cy = this.canvas.height / 2 + (h * this.scale)/2; // Shift down slightly
+                const sb = b * this.scale;
+                const sh = h * this.scale;
+                
+                const p1 = { x: cx - sb/2, y: cy }; // Bottom Left
+                const p2 = { x: cx + sb/2, y: cy }; // Bottom Right
+                const p3 = { x: cx, y: cy - sh };   // Top Center (Isosceles for area view)
+
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Shape
+                this.ctx.beginPath();
+                this.ctx.moveTo(p1.x, p1.y);
+                this.ctx.lineTo(p2.x, p2.y);
+                this.ctx.lineTo(p3.x, p3.y);
+                this.ctx.closePath();
+                this.ctx.fillStyle = 'rgba(168, 85, 247, 0.1)';
+                this.ctx.fill();
+                this.ctx.strokeStyle = '#a855f7';
+                this.ctx.lineWidth = 3;
+                this.ctx.stroke();
+
+                // Labels
+                // Base
+                this.drawText(b, cx, cy + 20, '#fbbf24');
+                
+                // Height (Dashed)
+                this.ctx.beginPath();
+                this.ctx.setLineDash([5, 5]);
+                this.ctx.strokeStyle = '#e2e8f0';
+                this.ctx.lineWidth = 1;
+                this.ctx.moveTo(cx, cy);
+                this.ctx.lineTo(cx, cy - sh);
+                this.ctx.stroke();
+                this.ctx.setLineDash([]);
+                this.drawText(h, cx + 15, cy - sh/2, '#fbbf24');
+            }
+
+            drawRightTriangle(a, b) {
+                const cx = this.canvas.width / 2;
+                const cy = this.canvas.height / 2;
+                const sa = a * this.scale;
+                const sb = b * this.scale;
+                
+                // Center visualization roughly
+                const startX = cx - sb/2;
+                const startY = cy + sa/2;
+
+                const pC = { x: startX, y: startY };      // Corner (90 deg)
+                const pA = { x: startX, y: startY - sa }; // Top
+                const pB = { x: startX + sb, y: startY }; // Right
+
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+                this.ctx.beginPath();
+                this.ctx.moveTo(pC.x, pC.y);
+                this.ctx.lineTo(pA.x, pA.y);
+                this.ctx.lineTo(pB.x, pB.y);
+                this.ctx.closePath();
+                this.ctx.fillStyle = 'rgba(16, 185, 129, 0.1)';
+                this.ctx.fill();
+
+                // Sides
+                this.drawLine(pC.x, pC.y, pA.x, pA.y, a); // Cathetus Vertical
+                this.drawLine(pC.x, pC.y, pB.x, pB.y, b); // Cathetus Horizontal
+                
+                // Hypotenuse (Red/Question)
+                this.ctx.beginPath();
+                this.ctx.strokeStyle = '#ef4444';
+                this.ctx.moveTo(pA.x, pA.y);
+                this.ctx.lineTo(pB.x, pB.y);
+                this.ctx.stroke();
+                this.drawText("?", (pA.x+pB.x)/2 + 10, (pA.y+pB.y)/2 - 10, '#ef4444', 20);
+
+                // Right angle mark
+                this.ctx.strokeStyle = '#fff';
+                this.ctx.strokeRect(pC.x, pC.y - 15, 15, 15);
+            }
+        }
+
+        // --- SOLO LOGIC ---
+        const soloGame = {
+            renderer: null,
+            state: { mode: null, currentProblem: null, score: 0 },
+
+            init() {
+                this.renderer = new GameRenderer('gameCanvasSolo', 'canvasContainerSolo');
+                setTimeout(() => this.renderer.resize(), 100);
+            },
+
+            start(mode) {
+                this.state.mode = mode;
+                document.getElementById('soloMenuPanel').classList.add('hidden');
+                document.getElementById('soloGamePanel').classList.remove('hidden');
+                document.getElementById('soloGamePanel').classList.add('flex');
+                
+                const titles = { 'perimeter': 'PERÍMETRO', 'area': 'ÁREA', 'pythagoras': 'PITÁGORAS' };
+                document.getElementById('soloModeTitle').innerText = titles[mode];
+                this.generate();
+            },
+
+            exit() {
+                document.getElementById('soloGamePanel').classList.add('hidden');
+                document.getElementById('soloGamePanel').classList.remove('flex');
+                document.getElementById('soloMenuPanel').classList.remove('hidden');
+            },
+
+            generate() {
+                const mode = this.state.mode;
+                let prob = {};
+                const r = this.renderer;
+                r.resize(); // Clear
+
+                // UI Reset
+                document.getElementById('soloAnswerVal').value = '';
+                const lbl = document.getElementById('soloInputLabel');
+                const title = document.getElementById('soloQuestionTitle');
+                const hint = document.getElementById('soloHintText');
+                const desc = document.getElementById('soloProblemDesc');
+
+                if (mode === 'perimeter') {
+                    // Always Rectangle for simplicity in basic level
+                    const w = getRandomInt(3, 9);
+                    const h = getRandomInt(3, 9);
+                    prob = { type: 'rect', w, h, ans: 2*(w+h) };
+                    r.drawRect(w, h, false);
+                    lbl.innerText = "P =";
+                    title.innerText = "Qual o Perímetro?";
+                    hint.innerText = "2 x (Base + Altura)";
+                    desc.innerText = "Some todos os lados da figura.";
+                } 
+                else if (mode === 'area') {
+                    // Randomly Rect or Triangle
+                    if (Math.random() > 0.5) {
+                        const w = getRandomInt(3, 8);
+                        const h = getRandomInt(3, 8);
+                        prob = { type: 'rect', w, h, ans: w*h };
+                        r.drawRect(w, h, true);
+                        hint.innerText = "Base x Altura";
+                    } else {
+                        const b = getRandomInt(4, 10);
+                        const h = getRandomInt(4, 10);
+                        // Make sure b is even for nice drawing
+                        prob = { type: 'tri', b, h, ans: (b*h)/2 };
+                        r.drawTriangle(b, h);
+                        hint.innerText = "(Base x Altura) / 2";
+                    }
+                    lbl.innerText = "A =";
+                    title.innerText = "Qual a Área?";
+                    desc.innerText = "Calcule o espaço interno da figura.";
+                }
+                else if (mode === 'pythagoras') {
+                    // Pythagorean triples for integer answers mostly, or simple ints
+                    const triples = [[3,4,5], [6,8,10], [5,12,13], [8,15,17]];
+                    if (Math.random() > 0.3) {
+                        const t = triples[getRandomInt(0, 3)];
+                        prob = { type: 'right', a: t[0], b: t[1], ans: t[2] };
+                    } else {
+                        const a = getRandomInt(3, 8);
+                        const b = getRandomInt(3, 8);
+                        prob = { type: 'right', a, b, ans: Math.sqrt(a*a + b*b) };
+                    }
+                    r.drawRightTriangle(prob.a, prob.b);
+                    lbl.innerText = "h =";
+                    title.innerText = "Qual a Hipotenusa?";
+                    hint.innerText = "√ (cateto² + cateto²)";
+                    desc.innerText = "Descubra o valor do lado maior (diagonal).";
+                }
+
+                this.state.currentProblem = prob;
+            },
+
+            check() {
+                const val = parseFloat(document.getElementById('soloAnswerVal').value);
+                const ans = this.state.currentProblem.ans;
+                
+                if (Math.abs(val - ans) <= 0.1) {
+                    this.state.score += 15;
+                    document.getElementById('scoreDisplay').innerText = this.state.score;
+                    this.showFeedback("CORRETO!", true);
+                    setTimeout(() => this.generate(), 1500);
+                } else {
+                    this.showFeedback("ERRO", false);
+                }
+            },
+
+            showFeedback(text, success) {
+                const el = document.getElementById('feedbackOverlaySolo');
+                const t = document.getElementById('feedbackTextSolo');
+                t.innerText = text;
+                t.className = `text-4xl font-bold sci-fi-font ${success ? 'text-green-400' : 'text-red-500'}`;
+                el.classList.remove('hidden', 'opacity-0');
+                setTimeout(() => {
+                    el.classList.add('opacity-0');
+                    setTimeout(() => el.classList.add('hidden'), 500);
+                }, 1000);
+            },
+
+            toggleHint() {
+                document.getElementById('soloHintBox').classList.toggle('hidden');
+            }
+        };
+
+        // --- MULTIPLAYER LOGIC ---
+        const multiGame = {
+            renderer: null,
+            state: { p1Score: 0, p2Score: 0, currentProb: null, isActive: false },
+
+            init() {
+                this.renderer = new GameRenderer('gameCanvasMulti', 'canvasContainerMulti');
+                setTimeout(() => this.renderer.resize(), 100);
+                this.prepRound();
+            },
+
+            prepRound() {
+                document.getElementById('multiWinnerOverlay').classList.add('hidden');
+                document.getElementById('multiOverlay').classList.remove('hidden');
+                
+                document.getElementById('p1Panel').classList.add('opacity-50', 'pointer-events-none');
+                document.getElementById('p2Panel').classList.add('opacity-50', 'pointer-events-none');
+                document.getElementById('p1Input').value = '';
+                document.getElementById('p2Input').value = '';
+
+                // Random Problem Type
+                const types = ['rect_area', 'tri_area', 'rect_perim', 'pyth'];
+                const type = types[getRandomInt(0, 3)];
+                
+                let title = "", prob = {};
+                
+                if(type === 'rect_area') {
+                    const w = getRandomInt(3,9), h=getRandomInt(3,9);
+                    title = "ÁREA DO RETÂNGULO";
+                    prob = { draw: () => this.renderer.drawRect(w, h, true), ans: w*h };
+                } else if(type === 'tri_area') {
+                    const b = getRandomInt(4,10), h=getRandomInt(4,10);
+                    title = "ÁREA DO TRIÂNGULO";
+                    prob = { draw: () => this.renderer.drawTriangle(b, h), ans: (b*h)/2 };
+                } else if(type === 'rect_perim') {
+                    const w = getRandomInt(3,9), h=getRandomInt(3,9);
+                    title = "PERÍMETRO";
+                    prob = { draw: () => this.renderer.drawRect(w, h, false), ans: 2*(w+h) };
+                } else {
+                    const t = [[3,4,5], [6,8,10], [5,12,13]][getRandomInt(0,2)];
+                    title = "HIPOTENUSA";
+                    prob = { draw: () => this.renderer.drawRightTriangle(t[0], t[1]), ans: t[2] };
+                }
+
+                document.getElementById('multiRoundTitle').innerText = title;
+                this.state.currentProb = prob;
+            },
+
+            nextRound() {
+                document.getElementById('multiOverlay').classList.add('hidden');
+                this.state.isActive = true;
+                this.renderer.resize();
+                this.state.currentProb.draw(); // Draw shape
+
+                document.getElementById('p1Panel').classList.remove('opacity-50', 'pointer-events-none');
+                document.getElementById('p2Panel').classList.remove('opacity-50', 'pointer-events-none');
+                document.getElementById('p1Input').focus();
+            },
+
+            submit(player) {
+                if(!this.state.isActive) return;
+                const inputId = player === 1 ? 'p1Input' : 'p2Input';
+                const val = parseFloat(document.getElementById(inputId).value);
+                const correct = this.state.currentProb.ans;
+
+                if(Math.abs(val - correct) <= 0.1) {
+                    this.winRound(player);
+                } else {
+                    const el = document.getElementById(inputId);
+                    el.classList.add('border-red-500', 'bg-red-900/50');
+                    setTimeout(() => el.classList.remove('border-red-500', 'bg-red-900/50'), 500);
+                }
+            },
+
+            winRound(winner) {
+                this.state.isActive = false;
+                if(winner === 1) this.state.p1Score++; else this.state.p2Score++;
+                document.getElementById('p1Score').innerText = this.state.p1Score;
+                document.getElementById('p2Score').innerText = this.state.p2Score;
+
+                document.getElementById('multiWinnerOverlay').classList.remove('hidden');
+                document.getElementById('multiWinnerOverlay').classList.add('flex');
+                
+                const txt = document.getElementById('winnerText');
+                txt.innerText = winner === 1 ? "JOGADOR 1 VENCEU!" : "JOGADOR 2 VENCEU!";
+                txt.className = `text-4xl font-bold sci-fi-font mb-4 ${winner===1?'text-cyan-400':'text-orange-400'}`;
+                
+                document.getElementById('winnerAnswer').innerText = `Resposta: ${this.state.currentProb.ans}`;
+            }
+        };
+    </script>
+</body>
+</html>
