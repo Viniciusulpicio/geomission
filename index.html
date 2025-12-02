@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoMission: Geometria Plana</title>
+    <title>GeoMission: Geometria Plana - Interpretação de Texto</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -106,7 +106,7 @@
                 </div>
                 <h2 class="text-xl font-bold mb-1">MODO ESTUDO (SOLO)</h2>
                 <p class="text-slate-400 text-xs text-center leading-relaxed max-w-xs">
-                    Pratique Áreas, Perímetros e Teorema de Pitágoras no seu ritmo.
+                    Do básico ao Avançado: Áreas, Trigonometria e Interpretação de Problemas.
                 </p>
             </button>
 
@@ -117,14 +117,14 @@
                 </div>
                 <h2 class="text-xl font-bold mb-1">DUELO (MULTIPLAYER)</h2>
                 <p class="text-slate-400 text-xs text-center leading-relaxed max-w-xs">
-                    Competição 1x1. Quem resolve o problema geométrico mais rápido vence.
+                    Competição 1x1. Inclui problemas de interpretação de texto.
                 </p>
             </button>
         </div>
         
         <!-- RODAPÉ COM NOME E SENAI -->
         <div class="mt-12 text-center">
-            <p class="text-slate-500 text-xs font-mono mb-2 uppercase tracking-widest">Desenvolvido por VS, JM, LM, GC, GT, TD</p>
+            <p class="text-slate-500 text-xs font-mono mb-2 uppercase tracking-widest">Desenvolvido por [Seu Nome Aqui]</p>
             <div class="flex items-center justify-center gap-3 text-slate-400 bg-slate-800/50 px-4 py-2 rounded-full border border-slate-700">
                 <i class="fas fa-cogs text-blue-500"></i>
                 <span class="font-bold tracking-wider text-xs">PROJETO SENAI</span>
@@ -170,25 +170,38 @@
                 <!-- Solo Menu -->
                 <div id="soloMenuPanel" class="flex flex-col gap-3 h-full justify-center">
                     <h2 class="text-xl text-center text-white mb-4 border-b border-cyan-500 pb-2">Escolha o Tema</h2>
+                    
+                    <!-- Básico -->
                     <button onclick="soloGame.start('perimeter')" class="btn-sci-fi bg-blue-600/20 border border-blue-500 hover:bg-blue-600 text-blue-100 p-3 rounded-lg flex items-center gap-3">
                         <i class="fas fa-vector-square text-lg"></i> 
                         <div class="text-left">
                             <span class="font-bold block">Perímetros</span>
-                            <span class="text-[10px] text-slate-400 normal-case">Soma dos lados</span>
+                            <span class="text-[10px] text-slate-400 normal-case">Básico: Retângulos</span>
                         </div>
                     </button>
+                    
                     <button onclick="soloGame.start('area')" class="btn-sci-fi bg-purple-600/20 border border-purple-500 hover:bg-purple-600 text-purple-100 p-3 rounded-lg flex items-center gap-3">
                         <i class="fas fa-th text-lg"></i> 
                         <div class="text-left">
-                            <span class="font-bold block">Áreas</span>
-                            <span class="text-[10px] text-slate-400 normal-case">Superfície interna</span>
+                            <span class="font-bold block">Áreas Simples</span>
+                            <span class="text-[10px] text-slate-400 normal-case">Retângulos e Triângulos</span>
                         </div>
                     </button>
+                    
                     <button onclick="soloGame.start('pythagoras')" class="btn-sci-fi bg-emerald-600/20 border border-emerald-500 hover:bg-emerald-600 text-emerald-100 p-3 rounded-lg flex items-center gap-3">
                         <i class="fas fa-draw-polygon text-lg"></i> 
                         <div class="text-left">
                             <span class="font-bold block">Pitágoras</span>
-                            <span class="text-[10px] text-slate-400 normal-case">Triângulos Retângulos</span>
+                            <span class="text-[10px] text-slate-400 normal-case">Triângulo Retângulo</span>
+                        </div>
+                    </button>
+
+                    <!-- Card Avançado (Novo) -->
+                    <button onclick="soloGame.start('vestibular')" class="btn-sci-fi bg-red-600/20 border border-red-500 hover:bg-red-600 text-red-100 p-3 rounded-lg flex items-center gap-3 mt-4 ring-2 ring-red-900">
+                        <i class="fas fa-graduation-cap text-lg"></i> 
+                        <div class="text-left">
+                            <span class="font-bold block">Nível Vestibular</span>
+                            <span class="text-[10px] text-slate-400 normal-case">Interpretação de Problemas</span>
                         </div>
                     </button>
                 </div>
@@ -204,16 +217,19 @@
 
                     <div class="bg-slate-900/80 p-4 rounded-lg border border-slate-700 mb-4 flex-grow flex flex-col justify-center">
                         <div class="text-center mb-6">
-                            <h3 class="text-white font-bold text-lg mb-1"><i class="fas fa-calculator mr-2 text-cyan-500"></i><span id="soloQuestionTitle">Calcule a Área</span></h3>
-                            <p id="soloProblemDesc" class="text-slate-400 text-sm">Observe as medidas no painel e resolva.</p>
+                            <h3 class="text-white font-bold text-lg mb-2"><i class="fas fa-calculator mr-2 text-cyan-500"></i><span id="soloQuestionTitle">Calcule a Área</span></h3>
+                            
+                            <!-- Problem Description Container (Enhanced for Text Problems) -->
+                            <div class="bg-slate-800 p-4 rounded-md border border-slate-600 shadow-inner">
+                                <p id="soloProblemDesc" class="text-slate-200 text-sm leading-relaxed text-justify font-serif">Observe as medidas no painel e resolva.</p>
+                            </div>
                         </div>
 
                         <!-- Inputs -->
                         <div class="space-y-4">
                             <div class="flex items-center gap-2 bg-slate-800 p-2 rounded border border-slate-600">
-                                <span id="soloInputLabel" class="text-xl font-bold font-serif text-white w-10 text-right">A =</span>
-                                <input type="number" step="0.1" id="soloAnswerVal" class="input-sci-fi flex-1 p-2 rounded text-xl focus:outline-none focus:border-cyan-400 text-right" placeholder="0.0">
-                                <span class="text-slate-500 text-sm font-bold pt-2">u.m.</span>
+                                <span id="soloInputLabel" class="text-xl font-bold font-serif text-white w-12 text-right">A =</span>
+                                <input type="number" step="0.01" id="soloAnswerVal" class="input-sci-fi flex-1 p-2 rounded text-xl focus:outline-none focus:border-cyan-400 text-right" placeholder="0.0">
                             </div>
                             
                             <button onclick="soloGame.check()" class="w-full btn-sci-fi bg-green-600 hover:bg-green-500 text-white font-bold py-3 rounded text-sm shadow-lg shadow-green-900/20">
@@ -264,19 +280,25 @@
 
         <main class="flex-1 flex flex-col h-full overflow-hidden">
             <!-- Center Canvas (Shared View) -->
-            <div class="h-[40vh] w-full p-2 bg-slate-950 relative flex justify-center border-b-2 border-slate-800">
+            <div class="h-[55vh] w-full p-2 bg-slate-950 relative flex justify-center border-b-2 border-slate-800">
                 <div class="aspect-video h-full crt-screen rounded-lg relative" id="canvasContainerMulti">
                      <canvas id="gameCanvasMulti" class="absolute z-1"></canvas>
                      
-                     <!-- Round Info Overlay -->
-                     <div id="multiOverlay" class="absolute inset-0 bg-black/80 z-20 flex flex-col items-center justify-center text-center">
+                     <!-- Persistent Question Text for Multiplayer (NEW) -->
+                     <div id="multiProblemBox" class="absolute top-2 left-2 right-2 bg-black/70 p-2 rounded border border-slate-700 pointer-events-none z-10 hidden">
+                         <h3 id="multiProblemTitle" class="text-orange-400 font-bold text-xs mb-1 uppercase text-center">Desafio</h3>
+                         <p id="multiProblemText" class="text-white text-xs text-center font-serif leading-tight">...</p>
+                     </div>
+
+                     <!-- Round Info Overlay (Start Screen) -->
+                     <div id="multiOverlay" class="absolute inset-0 bg-black/90 z-20 flex flex-col items-center justify-center text-center p-4">
                          <h2 id="multiRoundTitle" class="text-2xl font-bold text-white mb-2 sci-fi-font">PRONTO?</h2>
-                         <p id="multiRoundDesc" class="text-slate-300 text-sm mb-4 max-w-md px-4">O problema aparecerá abaixo.</p>
+                         <p id="multiRoundDesc" class="text-slate-300 text-sm mb-4 max-w-md">O problema aparecerá na tela.</p>
                          <button onclick="multiGame.nextRound()" class="btn-sci-fi bg-white text-black px-8 py-2 rounded font-bold hover:bg-slate-200">INICIAR RODADA</button>
                      </div>
 
                      <!-- Feedback Winner -->
-                     <div id="multiWinnerOverlay" class="absolute inset-0 bg-black/90 z-30 hidden flex-col items-center justify-center">
+                     <div id="multiWinnerOverlay" class="absolute inset-0 bg-black/95 z-30 hidden flex-col items-center justify-center p-4">
                         <h2 id="winnerText" class="text-4xl font-bold sci-fi-font mb-4 text-white">P1 VENCEU!</h2>
                         <div class="text-xl text-green-400 font-mono mb-6" id="winnerAnswer">Resposta: 5.0</div>
                         <button onclick="multiGame.prepRound()" class="btn-sci-fi border border-white text-white px-6 py-2 rounded hover:bg-white hover:text-black">PRÓXIMA</button>
@@ -285,14 +307,14 @@
             </div>
 
             <!-- Split Controls -->
-            <div class="flex-1 flex flex-row h-[60vh] md:h-full">
+            <div class="flex-1 flex flex-row h-[45vh] md:h-full">
                 <!-- P1 Controls (Blue) -->
                 <div class="flex-1 bg-slate-900 border-r border-slate-700 p-4 flex flex-col relative">
                     <div class="absolute top-0 left-0 w-full h-1 bg-cyan-500 shadow-[0_0_15px_#06b6d4]"></div>
-                    <h3 class="text-cyan-400 font-bold mb-4 sci-fi-font text-center">JOGADOR 1 (Azul)</h3>
+                    <h3 class="text-cyan-400 font-bold mb-4 sci-fi-font text-center text-sm md:text-base">JOGADOR 1 (Azul)</h3>
                     
                     <div class="flex-grow flex flex-col justify-center space-y-4 opacity-50 pointer-events-none transition-opacity" id="p1Panel">
-                        <input type="number" id="p1Input" class="input-sci-fi w-full p-4 text-2xl rounded focus:border-cyan-500 text-center" placeholder="?">
+                        <input type="number" id="p1Input" step="0.01" class="input-sci-fi w-full p-4 text-2xl rounded focus:border-cyan-500 text-center" placeholder="?">
                         <button onclick="multiGame.submit(1)" class="btn-sci-fi w-full bg-cyan-700 hover:bg-cyan-600 text-white p-4 rounded font-bold shadow-lg">
                             ENVIAR
                         </button>
@@ -302,10 +324,10 @@
                 <!-- P2 Controls (Red/Orange) -->
                 <div class="flex-1 bg-slate-900 p-4 flex flex-col relative">
                     <div class="absolute top-0 left-0 w-full h-1 bg-orange-500 shadow-[0_0_15px_#f97316]"></div>
-                    <h3 class="text-orange-400 font-bold mb-4 sci-fi-font text-center">JOGADOR 2 (Laranja)</h3>
+                    <h3 class="text-orange-400 font-bold mb-4 sci-fi-font text-center text-sm md:text-base">JOGADOR 2 (Laranja)</h3>
                     
                     <div class="flex-grow flex flex-col justify-center space-y-4 opacity-50 pointer-events-none transition-opacity" id="p2Panel">
-                        <input type="number" id="p2Input" class="input-sci-fi w-full p-4 text-2xl rounded focus:border-orange-500 text-center" placeholder="?">
+                        <input type="number" id="p2Input" step="0.01" class="input-sci-fi w-full p-4 text-2xl rounded focus:border-orange-500 text-center" placeholder="?">
                         <button onclick="multiGame.submit(2)" class="btn-sci-fi w-full bg-orange-700 hover:bg-orange-600 text-white p-4 rounded font-bold shadow-lg">
                             ENVIAR
                         </button>
@@ -366,6 +388,8 @@
                 ctx.font = `bold ${size}px Orbitron`;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
+                // Add a slight black outline to text to prevent overlap readability issues
+                ctx.strokeText(text, x, y);
                 ctx.fillText(text, x, y);
             }
 
@@ -382,10 +406,15 @@
                 if (label) {
                     const midX = (x1 + x2) / 2;
                     const midY = (y1 + y2) / 2;
-                    // Offset label slightly
-                    const offsetX = (y1 - y2) * 0.15; // Perpendicular vector for offset
-                    const offsetY = (x2 - x1) * 0.15;
-                    this.drawText(label, midX + offsetX, midY + offsetY, '#fbbf24', 14);
+                    // Offset label slightly perpendicular
+                    const dx = x2 - x1;
+                    const dy = y2 - y1;
+                    const len = Math.sqrt(dx*dx + dy*dy);
+                    // Increased offset from 20 to 30 to avoid overlap
+                    const offsetX = -(dy/len) * 30;
+                    const offsetY = (dx/len) * 30;
+
+                    this.drawText(label, midX + offsetX, midY + offsetY, '#fbbf24', 16);
                 }
             }
 
@@ -399,11 +428,9 @@
 
                 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
                 
-                // Shape fill
                 this.ctx.fillStyle = 'rgba(59, 130, 246, 0.1)';
                 this.ctx.fillRect(x, y, sw, sh);
 
-                // Sides
                 this.drawLine(x, y, x + sw, y, w); // Top
                 this.drawLine(x + sw, y, x + sw, y + sh, h); // Right
                 this.drawLine(x + sw, y + sh, x, y + sh, w); // Bottom
@@ -414,17 +441,16 @@
 
             drawTriangle(b, h) {
                 const cx = this.canvas.width / 2;
-                const cy = this.canvas.height / 2 + (h * this.scale)/2; // Shift down slightly
+                const cy = this.canvas.height / 2 + (h * this.scale)/2;
                 const sb = b * this.scale;
                 const sh = h * this.scale;
                 
-                const p1 = { x: cx - sb/2, y: cy }; // Bottom Left
-                const p2 = { x: cx + sb/2, y: cy }; // Bottom Right
-                const p3 = { x: cx, y: cy - sh };   // Top Center (Isosceles for area view)
+                const p1 = { x: cx - sb/2, y: cy };
+                const p2 = { x: cx + sb/2, y: cy };
+                const p3 = { x: cx, y: cy - sh };
 
                 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
                 
-                // Shape
                 this.ctx.beginPath();
                 this.ctx.moveTo(p1.x, p1.y);
                 this.ctx.lineTo(p2.x, p2.y);
@@ -436,11 +462,10 @@
                 this.ctx.lineWidth = 3;
                 this.ctx.stroke();
 
-                // Labels
-                // Base
-                this.drawText(b, cx, cy + 20, '#fbbf24');
+                // Base label pushed down further (offset 30)
+                this.drawText(b, cx, cy + 30, '#fbbf24');
                 
-                // Height (Dashed)
+                // Height
                 this.ctx.beginPath();
                 this.ctx.setLineDash([5, 5]);
                 this.ctx.strokeStyle = '#e2e8f0';
@@ -449,22 +474,22 @@
                 this.ctx.lineTo(cx, cy - sh);
                 this.ctx.stroke();
                 this.ctx.setLineDash([]);
-                this.drawText(h, cx + 15, cy - sh/2, '#fbbf24');
+                // Height label pushed to right
+                this.drawText(h, cx + 25, cy - sh/2, '#fbbf24');
             }
 
-            drawRightTriangle(a, b) {
+            drawRightTriangle(a, b, askHyp = true) {
                 const cx = this.canvas.width / 2;
                 const cy = this.canvas.height / 2;
                 const sa = a * this.scale;
                 const sb = b * this.scale;
                 
-                // Center visualization roughly
                 const startX = cx - sb/2;
                 const startY = cy + sa/2;
 
-                const pC = { x: startX, y: startY };      // Corner (90 deg)
-                const pA = { x: startX, y: startY - sa }; // Top
-                const pB = { x: startX + sb, y: startY }; // Right
+                const pC = { x: startX, y: startY };
+                const pA = { x: startX, y: startY - sa };
+                const pB = { x: startX + sb, y: startY };
 
                 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -476,21 +501,129 @@
                 this.ctx.fillStyle = 'rgba(16, 185, 129, 0.1)';
                 this.ctx.fill();
 
-                // Sides
-                this.drawLine(pC.x, pC.y, pA.x, pA.y, a); // Cathetus Vertical
-                this.drawLine(pC.x, pC.y, pB.x, pB.y, b); // Cathetus Horizontal
+                this.drawLine(pC.x, pC.y, pA.x, pA.y, a);
+                this.drawLine(pC.x, pC.y, pB.x, pB.y, b);
                 
-                // Hypotenuse (Red/Question)
                 this.ctx.beginPath();
                 this.ctx.strokeStyle = '#ef4444';
                 this.ctx.moveTo(pA.x, pA.y);
                 this.ctx.lineTo(pB.x, pB.y);
                 this.ctx.stroke();
-                this.drawText("?", (pA.x+pB.x)/2 + 10, (pA.y+pB.y)/2 - 10, '#ef4444', 20);
+                
+                if(askHyp) {
+                     // Push hyp question mark away from line
+                     this.drawText("?", (pA.x+pB.x)/2 + 20, (pA.y+pB.y)/2 - 20, '#ef4444', 24);
+                }
 
-                // Right angle mark
                 this.ctx.strokeStyle = '#fff';
                 this.ctx.strokeRect(pC.x, pC.y - 15, 15, 15);
+            }
+
+            drawTrapezoid(B, b, h) {
+                const cx = this.canvas.width / 2;
+                const cy = this.canvas.height / 2 + (h * this.scale)/2;
+                const sB = B * this.scale;
+                const sb = b * this.scale;
+                const sh = h * this.scale;
+                
+                const p1 = { x: cx - sB/2, y: cy }; // Bottom Left
+                const p2 = { x: cx + sB/2, y: cy }; // Bottom Right
+                const p3 = { x: cx + sb/2, y: cy - sh }; // Top Right
+                const p4 = { x: cx - sb/2, y: cy - sh }; // Top Left
+
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                this.ctx.beginPath();
+                this.ctx.moveTo(p1.x, p1.y);
+                this.ctx.lineTo(p2.x, p2.y);
+                this.ctx.lineTo(p3.x, p3.y);
+                this.ctx.lineTo(p4.x, p4.y);
+                this.ctx.closePath();
+                this.ctx.fillStyle = 'rgba(239, 68, 68, 0.1)';
+                this.ctx.fill();
+                this.ctx.strokeStyle = '#ef4444';
+                this.ctx.lineWidth = 3;
+                this.ctx.stroke();
+
+                // Labels - Increased Offsets
+                this.drawText("B", cx, cy + 30, '#fbbf24'); // Base Maior
+                this.drawText("b", cx, cy - sh - 25, '#fbbf24'); // Base Menor
+                
+                // Height
+                this.ctx.beginPath();
+                this.ctx.setLineDash([5, 5]);
+                this.ctx.strokeStyle = '#e2e8f0';
+                this.ctx.moveTo(cx, cy);
+                this.ctx.lineTo(cx, cy - sh);
+                this.ctx.stroke();
+                this.ctx.setLineDash([]);
+                this.drawText("h", cx + 25, cy - sh/2, '#fbbf24');
+            }
+
+            drawCircle(r) {
+                const cx = this.canvas.width / 2;
+                const cy = this.canvas.height / 2;
+                const sr = r * this.scale;
+
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+                this.ctx.beginPath();
+                this.ctx.arc(cx, cy, sr, 0, 2 * Math.PI);
+                this.ctx.fillStyle = 'rgba(236, 72, 153, 0.1)';
+                this.ctx.fill();
+                this.ctx.strokeStyle = '#ec4899';
+                this.ctx.lineWidth = 3;
+                this.ctx.stroke();
+
+                // Radius Line
+                this.ctx.beginPath();
+                this.ctx.moveTo(cx, cy);
+                this.ctx.lineTo(cx + sr, cy);
+                this.ctx.strokeStyle = '#fff';
+                this.ctx.stroke();
+                
+                // Radius Label pushed up
+                this.drawText(`R`, cx + sr/2, cy - 20, '#fbbf24');
+            }
+
+            drawTrigTriangle(angle, hyp) {
+                const cx = this.canvas.width / 2;
+                const cy = this.canvas.height / 2;
+                const shyp = hyp * this.scale;
+                
+                const rad = angle * (Math.PI / 180);
+                const opp = shyp * Math.sin(rad);
+                const adj = shyp * Math.cos(rad);
+
+                const startX = cx - adj/2;
+                const startY = cy + opp/2;
+
+                const pC = { x: startX + adj, y: startY }; // 90 corner
+                const pB = { x: startX + adj, y: startY - opp }; // Top
+                const pA = { x: startX, y: startY }; // Angle corner
+
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+                this.ctx.beginPath();
+                this.ctx.moveTo(pC.x, pC.y);
+                this.ctx.lineTo(pB.x, pB.y);
+                this.ctx.lineTo(pA.x, pA.y);
+                this.ctx.closePath();
+                
+                this.ctx.strokeStyle = '#3b82f6';
+                this.ctx.lineWidth = 3;
+                this.ctx.stroke();
+
+                // Draw Angle Arc
+                this.ctx.beginPath();
+                this.ctx.arc(pA.x, pA.y, 30, 0, -rad, true);
+                this.ctx.strokeStyle = '#fbbf24';
+                this.ctx.stroke();
+                this.drawText(`${angle}°`, pA.x + 40, pA.y - 10, '#fbbf24');
+
+                // Labels - Positioned carefully
+                this.drawText("H", (pA.x+pB.x)/2 - 20, (pA.y+pB.y)/2 - 20, '#fff');
+                this.drawText("x", pC.x + 25, (pC.y+pB.y)/2, '#ef4444', 24);
             }
         }
 
@@ -510,7 +643,12 @@
                 document.getElementById('soloGamePanel').classList.remove('hidden');
                 document.getElementById('soloGamePanel').classList.add('flex');
                 
-                const titles = { 'perimeter': 'PERÍMETRO', 'area': 'ÁREA', 'pythagoras': 'PITÁGORAS' };
+                const titles = { 
+                    'perimeter': 'PERÍMETRO', 
+                    'area': 'ÁREA', 
+                    'pythagoras': 'PITÁGORAS',
+                    'vestibular': 'VESTIBULAR & ENEM' 
+                };
                 document.getElementById('soloModeTitle').innerText = titles[mode];
                 this.generate();
             },
@@ -525,9 +663,8 @@
                 const mode = this.state.mode;
                 let prob = {};
                 const r = this.renderer;
-                r.resize(); // Clear
+                r.resize(); 
 
-                // UI Reset
                 document.getElementById('soloAnswerVal').value = '';
                 const lbl = document.getElementById('soloInputLabel');
                 const title = document.getElementById('soloQuestionTitle');
@@ -535,10 +672,9 @@
                 const desc = document.getElementById('soloProblemDesc');
 
                 if (mode === 'perimeter') {
-                    // Always Rectangle for simplicity in basic level
                     const w = getRandomInt(3, 9);
                     const h = getRandomInt(3, 9);
-                    prob = { type: 'rect', w, h, ans: 2*(w+h) };
+                    prob = { type: 'rect', ans: 2*(w+h) };
                     r.drawRect(w, h, false);
                     lbl.innerText = "P =";
                     title.innerText = "Qual o Perímetro?";
@@ -546,18 +682,16 @@
                     desc.innerText = "Some todos os lados da figura.";
                 } 
                 else if (mode === 'area') {
-                    // Randomly Rect or Triangle
                     if (Math.random() > 0.5) {
                         const w = getRandomInt(3, 8);
                         const h = getRandomInt(3, 8);
-                        prob = { type: 'rect', w, h, ans: w*h };
+                        prob = { type: 'rect', ans: w*h };
                         r.drawRect(w, h, true);
                         hint.innerText = "Base x Altura";
                     } else {
                         const b = getRandomInt(4, 10);
                         const h = getRandomInt(4, 10);
-                        // Make sure b is even for nice drawing
-                        prob = { type: 'tri', b, h, ans: (b*h)/2 };
+                        prob = { type: 'tri', ans: (b*h)/2 };
                         r.drawTriangle(b, h);
                         hint.innerText = "(Base x Altura) / 2";
                     }
@@ -566,21 +700,67 @@
                     desc.innerText = "Calcule o espaço interno da figura.";
                 }
                 else if (mode === 'pythagoras') {
-                    // Pythagorean triples for integer answers mostly, or simple ints
                     const triples = [[3,4,5], [6,8,10], [5,12,13], [8,15,17]];
                     if (Math.random() > 0.3) {
                         const t = triples[getRandomInt(0, 3)];
-                        prob = { type: 'right', a: t[0], b: t[1], ans: t[2] };
+                        prob = { type: 'right', ans: t[2] };
+                        r.drawRightTriangle(t[0], t[1], true);
                     } else {
                         const a = getRandomInt(3, 8);
                         const b = getRandomInt(3, 8);
-                        prob = { type: 'right', a, b, ans: Math.sqrt(a*a + b*b) };
+                        prob = { type: 'right', ans: Math.sqrt(a*a + b*b) };
+                        r.drawRightTriangle(a, b, true);
                     }
-                    r.drawRightTriangle(prob.a, prob.b);
                     lbl.innerText = "h =";
                     title.innerText = "Qual a Hipotenusa?";
-                    hint.innerText = "√ (cateto² + cateto²)";
+                    hint.innerText = "h² = a² + b²";
                     desc.innerText = "Descubra o valor do lado maior (diagonal).";
+                }
+                else if (mode === 'vestibular') {
+                    const pType = getRandomInt(1, 3); 
+                    
+                    if (pType === 1) { 
+                        const B = getRandomInt(8, 15);
+                        const b = getRandomInt(4, B-3);
+                        const h = getRandomInt(5, 12);
+                        prob = { ans: ((B+b)*h)/2 };
+                        r.drawTrapezoid(B, b, h);
+                        lbl.innerText = "A =";
+                        title.innerText = "O Terreno da Prefeitura";
+                        hint.innerText = "((Base Maior + Menor) x Altura) / 2";
+                        desc.innerHTML = `Um prefeito deseja pavimentar uma praça em formato de trapézio (figura acima).<br><br>
+                        O lado do fundo (Base Maior) mede <b>${B}m</b>.<br>
+                        A frente (Base Menor) mede <b>${b}m</b>.<br>
+                        A distância entre eles (Altura) é de <b>${h}m</b>.<br><br>
+                        Quantos metros quadrados serão pavimentados?`;
+                    }
+                    else if (pType === 2) { 
+                        const radius = getRandomInt(3, 10);
+                        prob = { ans: 3.14 * (radius * radius) };
+                        r.drawCircle(radius);
+                        lbl.innerText = "A =";
+                        title.innerText = "A Mancha de Óleo";
+                        hint.innerText = "A = π . r² (Use π = 3.14)";
+                        desc.innerHTML = `Um vazamento em um navio formou uma mancha de óleo perfeitamente circular no mar.<br><br>
+                        A defesa civil mediu o raio da mancha e encontrou <b>${radius} metros</b>.<br><br>
+                        Qual é a área total afetada pelo óleo? (Considere π = 3.14)`;
+                    }
+                    else { 
+                        const angles = [30, 45, 60];
+                        const ang = angles[getRandomInt(0, 2)];
+                        const hyp = getRandomInt(8, 20);
+                        const sinVal = Math.sin(ang * Math.PI / 180);
+                        const sinDisplay = sinVal.toFixed(2);
+                        prob = { ans: hyp * sinVal };
+                        r.drawTrigTriangle(ang, hyp);
+                        lbl.innerText = "x =";
+                        title.innerText = "A Escada do Bombeiro";
+                        hint.innerText = "sen(θ) = Oposto / Hipotenusa";
+                        desc.innerHTML = `Para salvar um gatinho, um bombeiro apoiou uma escada de <b>${hyp} metros</b> (H) no muro.<br><br>
+                        A escada formou um ângulo de <b>${ang}°</b> com o chão.<br><br>
+                        Qual é a altura (x) que a escada alcançou no muro?<br>
+                        <span class="text-xs text-yellow-500">(Dado: sen(${ang}°) = ${sinDisplay})</span>`;
+                    }
                 }
 
                 this.state.currentProblem = prob;
@@ -589,12 +769,11 @@
             check() {
                 const val = parseFloat(document.getElementById('soloAnswerVal').value);
                 const ans = this.state.currentProblem.ans;
-                
-                if (Math.abs(val - ans) <= 0.1) {
-                    this.state.score += 15;
+                if (Math.abs(val - ans) <= 0.5) {
+                    this.state.score += 20; 
                     document.getElementById('scoreDisplay').innerText = this.state.score;
                     this.showFeedback("CORRETO!", true);
-                    setTimeout(() => this.generate(), 1500);
+                    setTimeout(() => this.generate(), 2500); 
                 } else {
                     this.showFeedback("ERRO", false);
                 }
@@ -631,45 +810,75 @@
             prepRound() {
                 document.getElementById('multiWinnerOverlay').classList.add('hidden');
                 document.getElementById('multiOverlay').classList.remove('hidden');
+                document.getElementById('multiProblemBox').classList.add('hidden'); // Hide text box initially
                 
                 document.getElementById('p1Panel').classList.add('opacity-50', 'pointer-events-none');
                 document.getElementById('p2Panel').classList.add('opacity-50', 'pointer-events-none');
                 document.getElementById('p1Input').value = '';
                 document.getElementById('p2Input').value = '';
 
-                // Random Problem Type
-                const types = ['rect_area', 'tri_area', 'rect_perim', 'pyth'];
-                const type = types[getRandomInt(0, 3)];
+                // Random Problem Type including HARD Text problems
+                const types = ['rect_area', 'tri_area', 'rect_perim', 'pyth', 'vest_trap', 'vest_circ', 'vest_trig'];
+                const type = types[getRandomInt(0, 6)];
                 
-                let title = "", prob = {};
+                let title = "", prob = {}, txt = "";
                 
                 if(type === 'rect_area') {
                     const w = getRandomInt(3,9), h=getRandomInt(3,9);
-                    title = "ÁREA DO RETÂNGULO";
+                    title = "ÁREA";
                     prob = { draw: () => this.renderer.drawRect(w, h, true), ans: w*h };
+                    txt = `Calcule a área do retângulo de base ${w} e altura ${h}.`;
                 } else if(type === 'tri_area') {
                     const b = getRandomInt(4,10), h=getRandomInt(4,10);
-                    title = "ÁREA DO TRIÂNGULO";
+                    title = "ÁREA";
                     prob = { draw: () => this.renderer.drawTriangle(b, h), ans: (b*h)/2 };
+                    txt = `Calcule a área do triângulo de base ${b} e altura ${h}.`;
                 } else if(type === 'rect_perim') {
                     const w = getRandomInt(3,9), h=getRandomInt(3,9);
                     title = "PERÍMETRO";
                     prob = { draw: () => this.renderer.drawRect(w, h, false), ans: 2*(w+h) };
-                } else {
+                    txt = `Calcule o perímetro do retângulo (${w}x${h}).`;
+                } else if(type === 'pyth') {
                     const t = [[3,4,5], [6,8,10], [5,12,13]][getRandomInt(0,2)];
                     title = "HIPOTENUSA";
                     prob = { draw: () => this.renderer.drawRightTriangle(t[0], t[1]), ans: t[2] };
+                    txt = `Encontre o valor da hipotenusa.`;
+                } else if(type === 'vest_trap') {
+                    const B = getRandomInt(8, 15), b = getRandomInt(4, B-3), h = getRandomInt(5, 12);
+                    title = "TRAPÉZIO";
+                    prob = { draw: () => this.renderer.drawTrapezoid(B, b, h), ans: ((B+b)*h)/2 };
+                    txt = `Terreno: Base maior ${B}m, menor ${b}m, altura ${h}m. Qual a área?`;
+                } else if(type === 'vest_circ') {
+                    const r = getRandomInt(3, 10);
+                    title = "CÍRCULO";
+                    prob = { draw: () => this.renderer.drawCircle(r), ans: 3.14*(r*r) };
+                    txt = `Raio = ${r}m. Qual a área da mancha de óleo? (Use π=3.14)`;
+                } else {
+                    const angles = [30, 45, 60];
+                    const ang = angles[getRandomInt(0, 2)];
+                    const hyp = getRandomInt(8, 20);
+                    const sinVal = Math.sin(ang * Math.PI / 180);
+                    title = "TRIGONOMETRIA";
+                    prob = { draw: () => this.renderer.drawTrigTriangle(ang, hyp), ans: hyp * sinVal };
+                    txt = `Escada de ${hyp}m, ângulo ${ang}°. Qual a altura (x)? (sen(${ang}°) = ${sinVal.toFixed(2)})`;
                 }
 
                 document.getElementById('multiRoundTitle').innerText = title;
+                
+                // Set text for gameplay
+                document.getElementById('multiProblemTitle').innerText = title;
+                document.getElementById('multiProblemText').innerText = txt;
+                
                 this.state.currentProb = prob;
             },
 
             nextRound() {
                 document.getElementById('multiOverlay').classList.add('hidden');
+                document.getElementById('multiProblemBox').classList.remove('hidden'); // Show text box
+                
                 this.state.isActive = true;
                 this.renderer.resize();
-                this.state.currentProb.draw(); // Draw shape
+                this.state.currentProb.draw(); 
 
                 document.getElementById('p1Panel').classList.remove('opacity-50', 'pointer-events-none');
                 document.getElementById('p2Panel').classList.remove('opacity-50', 'pointer-events-none');
@@ -682,7 +891,7 @@
                 const val = parseFloat(document.getElementById(inputId).value);
                 const correct = this.state.currentProb.ans;
 
-                if(Math.abs(val - correct) <= 0.1) {
+                if(Math.abs(val - correct) <= 0.5) {
                     this.winRound(player);
                 } else {
                     const el = document.getElementById(inputId);
@@ -699,12 +908,13 @@
 
                 document.getElementById('multiWinnerOverlay').classList.remove('hidden');
                 document.getElementById('multiWinnerOverlay').classList.add('flex');
+                document.getElementById('multiProblemBox').classList.add('hidden');
                 
                 const txt = document.getElementById('winnerText');
                 txt.innerText = winner === 1 ? "JOGADOR 1 VENCEU!" : "JOGADOR 2 VENCEU!";
                 txt.className = `text-4xl font-bold sci-fi-font mb-4 ${winner===1?'text-cyan-400':'text-orange-400'}`;
                 
-                document.getElementById('winnerAnswer').innerText = `Resposta: ${this.state.currentProb.ans}`;
+                document.getElementById('winnerAnswer').innerText = `Resposta: ${this.state.currentProb.ans.toFixed(2)}`;
             }
         };
     </script>
